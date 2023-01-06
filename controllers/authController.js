@@ -15,7 +15,7 @@ exports.saveUser = async (req, res, next) => {
         password: joi.string().min(8).required()
             .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,}$)"))
             .messages({
-                "string.patter.base": `Password length should be minimum of 8 characters with at least one uppercase, one lowercase, one number and one special character.`,
+                "string.pattern.base": `Password length should be minimum of 8 characters with at least one uppercase, one lowercase, one number and one special character.`,
                 "string.empty": `Password cannot be empty`,
                 "any.required": `Password is required`,
             }),
@@ -37,6 +37,7 @@ exports.saveUser = async (req, res, next) => {
         phone: req.body.phone,
         username: req.body.username,
         password: hashedPassword,
+        ...(req.body.image && { image: req.body.image })
     }
 
 
