@@ -1,9 +1,10 @@
 const User = require('../models/User')
 const joi = require('joi')
 const bcrypt = require('bcryptjs')
+const fs = require('fs')
 
 exports.saveUser = async (req, res, next) => {
-
+    
     //validate incoming request
     const registerSchema = joi.object({
         first_name: joi.string().required(),
@@ -28,7 +29,7 @@ exports.saveUser = async (req, res, next) => {
         return next(error)
     }
 
-    let hashedPassword = await bcrypt.hash(req.body.password, 10)
+    let hashedPassword = await bcrypt.hash(req.body.password, 10) //encrypting password
     let jsonObject = {
         first_name: req.body.first_name,
         middle_name: req.body.middle_name,
@@ -37,7 +38,7 @@ exports.saveUser = async (req, res, next) => {
         phone: req.body.phone,
         username: req.body.username,
         password: hashedPassword,
-        ...(req.body.image && { image: req.body.image })
+        ...(req.file && { image: fs.readFileSync(req.file.destination + '\\' + req.file.filename) })
     }
 
 
