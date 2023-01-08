@@ -46,7 +46,7 @@ module.exports = sequelize.define('user', {
         defaultValue: true
     },
     image: {
-        type: DataTypes.BLOB
+        type: DataTypes.STRING
     },
     createdAt: {
         type: DataTypes.DATE,

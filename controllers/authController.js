@@ -38,7 +38,7 @@ exports.saveUser = async (req, res, next) => {
         phone: req.body.phone,
         username: req.body.username,
         password: hashedPassword,
-        ...(req.file && { image: fs.readFileSync(req.file.destination + '\\' + req.file.filename) })
+        ...(req.file && { image: req.file.buffer.toString('base64') })
     }
 
 
